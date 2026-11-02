@@ -1,8 +1,26 @@
-# Filipino Media Bulletin (FMB)
+# Filipino Media Bulletin
 
 **Know what matters.** A mobile-first, source-linked news briefing focused on the Philippines, the world, and practical Filipino relevance.
 
 > **Status (November 2026): first implementation, not a live newsroom.** No stories have been approved or published, no hosting is configured, and no automatic live-news publishing occurs. The public build intentionally shows an honest first-edition state. GitHub Actions and commercial news licenses are not launch dependencies.
+
+## Approved editorial identity (November 3, 2026)
+
+The only public-facing masthead is **Filipino Media Bulletin** (not the initials).
+The approved visual direction is a photographic dusk masthead, deep-navy navigation,
+restrained gold and crimson details, glass bulletin previews, cream editorial columns,
+and a mobile-first Philippines / World section switch. The public interface uses
+SVG line icons rather than emoji. Mobile and desktop share the same editorial source.
+
+Photographs used as **illustrative design backgrounds** are credited in the footer
+and must never be misrepresented as images of actual breaking-news events. Headlines
+from visual mockups are not published. Noindex prelaunch, rights checks, editor approval,
+source traceability, corrections, and a permanent archive remain mandatory.
+
+Public path: `https://francinemariebautista.com/filipinomediabulletin/`.
+The PCO Pages deployment pins a verified source commit. Updates require a new pin
+and production smoke test; never merge FMB application code into the PCO repository.
+The separate legacy `/news/` archive must remain intact.
 
 ## What is implemented
 
