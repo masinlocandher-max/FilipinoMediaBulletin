@@ -1,0 +1,112 @@
+[
+  {
+    "id": "gma-news",
+    "name": "GMA News Online",
+    "url": "https://www.gmanetwork.com/news/",
+    "feed": "https://data.gmanetwork.com/gno/rss/news/feed.xml",
+    "type": "independent-reporting",
+    "coverage": "philippines",
+    "enabled": true,
+    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs."
+  },
+  {
+    "id": "philstar",
+    "name": "Philstar.com",
+    "url": "https://www.philstar.com/",
+    "feed": "https://www.philstar.com/rss/headlines",
+    "type": "independent-reporting",
+    "coverage": "philippines",
+    "enabled": true,
+    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs."
+  },
+  {
+    "id": "inquirer",
+    "name": "INQUIRER.net",
+    "url": "https://www.inquirer.net/",
+    "feed": "https://www.inquirer.net/fullfeed",
+    "type": "independent-reporting",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Feed access and licensing require validation before enabling."
+  },
+  {
+    "id": "pna",
+    "name": "Philippine News Agency",
+    "url": "https://www.pna.gov.ph/",
+    "feed": "https://www.pna.gov.ph/latest.rss",
+    "type": "government-newswire",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Government statements must be independently assessed; test endpoint before enabling."
+  },
+  {
+    "id": "pagasa",
+    "name": "PAGASA",
+    "url": "https://www.pagasa.dost.gov.ph/",
+    "feed": null,
+    "type": "primary-public-advisories",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Manually monitor official alerts; do not invent an API endpoint."
+  },
+  {
+    "id": "phivolcs",
+    "name": "PHIVOLCS",
+    "url": "https://www.phivolcs.dost.gov.ph/",
+    "feed": null,
+    "type": "primary-public-advisories",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Manually monitor official alerts; do not invent an API endpoint."
+  },
+  {
+    "id": "psa",
+    "name": "Philippine Statistics Authority",
+    "url": "https://psa.gov.ph/",
+    "feed": null,
+    "type": "primary-statistics",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Monitor official releases; confirm original figures and dates."
+  },
+  {
+    "id": "bsp",
+    "name": "Bangko Sentral ng Pilipinas",
+    "url": "https://www.bsp.gov.ph/",
+    "feed": null,
+    "type": "primary-statistics",
+    "coverage": "philippines",
+    "enabled": false,
+    "rights": "Monitor official releases; confirm original figures and dates."
+  },
+  {
+    "id": "reuters",
+    "name": "Reuters",
+    "url": "https://www.reuters.com/",
+    "feed": null,
+    "type": "independent-reporting",
+    "coverage": "world",
+    "enabled": false,
+    "rights": "Licensed API/feeds only if contracted; otherwise research and link."
+  },
+  {
+    "id": "ap",
+    "name": "Associated Press",
+    "url": "https://apnews.com/",
+    "feed": null,
+    "type": "independent-reporting",
+    "coverage": "world",
+    "enabled": false,
+    "rights": "Licensed API/feeds only if contracted; otherwise research and link."
+  },
+  {
+    "id": "who",
+    "name": "World Health Organization",
+    "url": "https://www.who.int/news",
+    "feed": null,
+    "type": "primary-public-advisories",
+    "coverage": "world",
+    "enabled": false,
+    "rights": "Official announcements, with independent context when claims are contested."
+  }
+]
