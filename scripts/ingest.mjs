@@ -1,28 +1,35 @@
 import fs from 'node:fs/promises';
-import { parseFeed } from './lib.mjs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { pollSources } from './monitor.mjs';
 
-const sources = JSON.parse(await fs.readFile(new URL('../data/sources.json', import.meta.url), 'utf8'));
-const inboxFile = new URL('../data/inbox.json', import.meta.url);
-let inbox = [];
-try { inbox = JSON.parse(await fs.readFile(inboxFile, 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-const existing = new Set(inbox.map(item => item.id));
-let added = 0; let failures = 0;
-for (const source of sources.filter(x => x.enabled && x.feed)) {
-  try {
-    const res = await fetch(source.feed, { signal: AbortSignal.timeout(12000), headers: { 'User-Agent': 'FilipinoMediaBulletinResearch/0.1 (+https://github.com/masinlocandher-max/FilipinoMediaBulletin)', Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9' } });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const xml = await res.text();
-    if (xml.length > 2_000_000) throw new Error('Feed exceeds 2MB safety limit');
-    const items = parseFeed(xml, source);
-    for (const item of items) if (!existing.has(item.id)) {
-      inbox.push({ ...item, discovered_at: new Date().toISOString(), status: 'discovered' });
-      existing.add(item.id); added++;
-    }
-    console.log(`${source.name}: ${items.length} valid entries`);
-  } catch (error) { failures++; console.error(`${source.name}: ${error.message}`); }
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const data = file => path.join(root, 'data', file);
+const read = async (file, fallback) => {
+  try { return JSON.parse(await fs.readFile(data(file), 'utf8')); }
+  catch (error) { if (error.code === 'ENOENT') return fallback; throw error; }
+};
+const save = async (file, value) => {
+  const target = data(file);
+  const temp = `${target}.${process.pid}.tmp`;
+  await fs.writeFile(temp, JSON.stringify(value, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+  await fs.rename(temp, target);
+};
+const scheduled = process.argv.includes('--scheduled');
+const dryRun = process.argv.includes('--dry-run');
+try {
+  const sources = await read('sources.json', []);
+  const inbox = await read('inbox.json', []);
+  const feedState = await read('feed-state.json', {});
+  const result = await pollSources({ sources, inbox, feedState, scheduled });
+  if (!dryRun) {
+    await save('inbox.json', result.inbox);
+    await save('feed-state.json', result.feedState);
+    await save('monitor-health.json', result.health);
+  }
+  console.log(JSON.stringify({ ...result.health, dry_run: dryRun }, null, 2));
+  if (result.health.failed) process.exitCode = 1;
+} catch (error) {
+  console.error(`FMB monitor: ${error.message}`);
+  process.exitCode = 1;
 }
-inbox.sort((a, b) => (b.published_at || '').localeCompare(a.published_at || ''));
-// Metadata only; no article text, images, or third-party prose is copied.
-await fs.writeFile(inboxFile, JSON.stringify(inbox.slice(0, 1500), null, 2) + '\n');
-console.log(`${added} new discovery items; ${failures} feeds failed. Editorial approval is always separate.`);
-if (failures) process.exitCode = 1;

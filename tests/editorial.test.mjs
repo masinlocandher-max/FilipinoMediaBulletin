@@ -101,3 +101,21 @@ test('editorial CLI prevents no-review publishing, deduplicates and records a co
     assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'data/bulletins.json')))[0].status,'retracted');
   } finally {f.cleanup();}
 });
+test('high-risk editorial signoff needs two different editors, including corrections', () => {
+  const f=fixture();
+  try {
+    const draft={...mock(),risk:'high'};
+    const draftFile=path.join(f.dir,'high.json');fs.writeFileSync(draftFile,JSON.stringify(draft));
+    assert.equal(f.exec('newsroom.mjs',['submit',draftFile]).status,0);
+    const id='synthetic-news-headline-for-controlled-test';
+    const base=['approve',id,'Editor One','--evidence-reviewed','--rights-reviewed','--corroborated'];
+    assert.notEqual(f.exec('newsroom.mjs',[...base,'--senior-editor=Editor One']).status,0);
+    assert.equal(f.exec('newsroom.mjs',[...base,'--senior-editor=Editor Two']).status,0);
+    const correction=path.join(f.dir,'high-correction.json');
+    fs.writeFileSync(correction,JSON.stringify({...draft,summary:'A materially corrected synthetic high-risk fixture for this test only.'}));
+    const correct=['correct',id,correction,'Editor One','Corrected the high-risk synthetic source details','--evidence-reviewed','--rights-reviewed','--corroborated'];
+    assert.notEqual(f.exec('newsroom.mjs',correct).status,0);
+    assert.notEqual(f.exec('newsroom.mjs',[...correct,'--senior-editor=Editor One']).status,0);
+    assert.equal(f.exec('newsroom.mjs',[...correct,'--senior-editor=Editor Three']).status,0);
+  } finally {f.cleanup();}
+});

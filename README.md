@@ -9,7 +9,7 @@
 - Responsive editorial website: Philippines / World, rolling last-24-hour feed, dated story pages, archive search, source directory, editorial principles, privacy page.
 - No fabricated articles, photos, live counts, news updates, or publisher endorsements.
 - Static HTML per bulletin, Article structured data, optional XML/RSS and sitemap generation when an HTTPS site origin is configured and launch mode is explicitly enabled.
-- Source registry and **manual RSS metadata ingestion** for enabled feeds. Titles, source URLs, publication time and IDs only; **no third-party article body or images**.
+- Source registry and **manual RSS metadata ingestion** with feed health, caching, link deduplication and tentative story-similarity suggestions. Titles, source URLs and publication times only; **no third-party article body or images**.
 - Human-controlled review workflow: submit, approve, reject, correct, retract. Publication requires explicit evidence/rights confirmation. Riskier stories require additional corroboration/senior review.
 - Audit trail, visible correction/retraction notices, stable URLs and automated tests.
 
@@ -33,7 +33,7 @@ npm run ingest
 # Inspect local untracked data/inbox.json; this is a research queue only.
 ```
 
-RSS accessibility varies by publisher. The ingest command reports failures rather than silently claiming success. Before scheduling repeated access, review each source's terms, licensing, robots rules and permitted API use. Research metadata is not FMB reporting.
+RSS accessibility varies by publisher. The ingest command reports failures rather than silently claiming success. The monitor stores `data/feed-state.json` and `data/monitor-health.json` privately; use `node scripts/ingest.mjs --dry-run` to test without writing results. `npm run monitor` is **intentionally blocked until explicitly approved source terms are recorded**. Before scheduling repeated access, review each source's terms, licensing, robots rules and permitted API use. Research metadata is not FMB reporting.
 
 ### Prepare and publish a real bulletin
 
@@ -47,7 +47,7 @@ node scripts/newsroom.mjs approve <id> "Editor Name" --evidence-reviewed --right
 npm run build
 ```
 
-For contested stories add `--corroborated`; for high-risk stories also supply `--senior-editor="Second Editor"`. Editors must not assert flags without completing the reviews. This tool is **not** an automated fact checker. It saves reviewed JSON locally; publication is delivered only after an authorized deployment of a new static build.
+For contested stories add `--corroborated`; for high-risk stories also supply `--senior-editor="Second Editor"` (a different person from the approving editor). High-risk corrections require fresh senior review. Editors must not assert flags without completing the reviews. This tool is **not** an automated fact checker. It saves reviewed JSON locally; publication is delivered only after an authorized deployment of a new static build.
 
 Other commands:
 
@@ -87,7 +87,7 @@ The MVP uses static publishing rather than introducing a backend, complex CMS or
 
 - `site/` — design system and progressive enhancement.
 - `scripts/build.mjs` — pre-rendered public publication and SEO outputs.
-- `scripts/ingest.mjs` — explicitly invoked RSS discovery only.
+- `scripts/ingest.mjs` and `scripts/monitor.mjs` — bounded RSS research, conditional requests, private health reporting, similarity suggestions and fail-closed scheduled mode.
 - `scripts/newsroom.mjs` — editor-controlled lifecycle.
 - `scripts/lib.mjs` — validation, escaping, RSS parsing and time rules.
 - `data/sources.json` — declared publisher/primary-source registry and enablement.

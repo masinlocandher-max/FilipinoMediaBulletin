@@ -39,3 +39,16 @@ The JSON files are single-writer local storage and can conflict under concurrent
 ## Public repository data boundary
 
 This repository is public. Never commit `data/inbox.json`, `data/queue.json`, `data/audit.json`, unverified allegations, personal contact data, credentials or source communications. Only reviewed public content belongs in `data/bulletins.json`. Local audit records must be backed up securely; a real authenticated database is needed before multi-editor operation.
+## Phase-two source monitor (implemented; scheduled polling not yet activated)
+
+`scripts/monitor.mjs` now provides a testable research-only feed monitor; `scripts/ingest.mjs` persists local output. It supports request timeouts, a 2 MB streamed response cap, failure reporting, conditional ETag / Last-Modified requests, tracking-parameter URL deduplication, and *suggested* similar-event grouping without merging or verifying stories. It never copies article text, photos, or publisher descriptions. Its private outputs are:
+
+- `data/inbox.json` — discovery leads with source links, statuses and tentative similarity markers.
+- `data/feed-state.json` — per-source last check, cache headers, errors and consecutive failures.
+- `data/monitor-health.json` — execution summary for operational review.
+
+All three files are gitignored in this public repository. Run `npm run ingest` for explicit, supervised research access after checking publisher conditions. Run `node scripts/ingest.mjs --dry-run` for a read-only poll. The `npm run monitor` command is **fail-closed**, intended only for a future scheduled worker: it refuses to poll unless a source has `automation_approved: true` and a valid `access_reviewed_at` date within the last 366 days. **No source has that approval yet**; do not mistake the workflow for a running schedule.
+
+`automation_approved` is a documented business/editorial permission decision, not a technical claim that publisher access is granted. Check endpoint terms, robots/licensing, reasonable polling limits, redirects and provider rights before toggling it. Source failures should prompt review, not cause the service to invent substitute news. Avoid inferring corroboration from multiple syndicated copies or similarity scores.
+
+A GitHub Actions *quality* workflow is included to test and build safely, but its runner execution has not been verified. There is deliberately **no automatic publication or unattended feed schedule** yet. A production worker requires approved source rights, private storage, deployment credentials, authenticated editors and monitoring of the worker's actual execution history.

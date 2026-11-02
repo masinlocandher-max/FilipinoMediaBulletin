@@ -7,7 +7,9 @@
     "type": "independent-reporting",
     "coverage": "philippines",
     "enabled": true,
-    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs."
+    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "philstar",
@@ -17,7 +19,9 @@
     "type": "independent-reporting",
     "coverage": "philippines",
     "enabled": true,
-    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs."
+    "rights": "Discovery metadata only; link to publisher. No republishing of article text or photographs.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "inquirer",
@@ -27,7 +31,9 @@
     "type": "independent-reporting",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Feed access and licensing require validation before enabling."
+    "rights": "Feed access and licensing require validation before enabling.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "pna",
@@ -37,7 +43,9 @@
     "type": "government-newswire",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Government statements must be independently assessed; test endpoint before enabling."
+    "rights": "Government statements must be independently assessed; test endpoint before enabling.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "pagasa",
@@ -47,7 +55,9 @@
     "type": "primary-public-advisories",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Manually monitor official alerts; do not invent an API endpoint."
+    "rights": "Manually monitor official alerts; do not invent an API endpoint.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "phivolcs",
@@ -57,7 +67,9 @@
     "type": "primary-public-advisories",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Manually monitor official alerts; do not invent an API endpoint."
+    "rights": "Manually monitor official alerts; do not invent an API endpoint.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "psa",
@@ -67,7 +79,9 @@
     "type": "primary-statistics",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Monitor official releases; confirm original figures and dates."
+    "rights": "Monitor official releases; confirm original figures and dates.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "bsp",
@@ -77,7 +91,9 @@
     "type": "primary-statistics",
     "coverage": "philippines",
     "enabled": false,
-    "rights": "Monitor official releases; confirm original figures and dates."
+    "rights": "Monitor official releases; confirm original figures and dates.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "reuters",
@@ -87,7 +103,9 @@
     "type": "independent-reporting",
     "coverage": "world",
     "enabled": false,
-    "rights": "Licensed API/feeds only if contracted; otherwise research and link."
+    "rights": "Licensed API/feeds only if contracted; otherwise research and link.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "ap",
@@ -97,7 +115,9 @@
     "type": "independent-reporting",
     "coverage": "world",
     "enabled": false,
-    "rights": "Licensed API/feeds only if contracted; otherwise research and link."
+    "rights": "Licensed API/feeds only if contracted; otherwise research and link.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   },
   {
     "id": "who",
@@ -107,6 +127,8 @@
     "type": "primary-public-advisories",
     "coverage": "world",
     "enabled": false,
-    "rights": "Official announcements, with independent context when claims are contested."
+    "rights": "Official announcements, with independent context when claims are contested.",
+    "automation_approved": false,
+    "access_reviewed_at": null
   }
 ]

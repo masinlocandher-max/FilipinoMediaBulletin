@@ -7,3 +7,5 @@ data/inbox.json
 .DS_Store
 data/queue.json
 data/audit.json
+data/feed-state.json
+data/monitor-health.json

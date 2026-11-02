@@ -36,7 +36,8 @@ export function validateBulletin(item, { forPublication = false } = {}) {
     if (!cleanText(item.editor)) errors.push('Approving editor required');
     if (!item.evidence_checked) errors.push('Editor must explicitly confirm evidence was checked');
     if (!item.rights_checked) errors.push('Editor must explicitly confirm content and media rights');
-    if (item.risk === 'high' && !item.senior_editor) errors.push('High-risk claims require a senior editor');
+    if (item.risk === 'high' && !cleanText(item.senior_editor)) errors.push('High-risk claims require a senior editor');
+    if (item.risk === 'high' && cleanText(item.senior_editor).toLowerCase() === cleanText(item.editor).toLowerCase()) errors.push('Senior editor must be different from approving editor');
   }
   return errors;
 }
