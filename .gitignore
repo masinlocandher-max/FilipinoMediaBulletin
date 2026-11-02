@@ -5,3 +5,5 @@ node_modules/
 !*.example
 data/inbox.json
 .DS_Store
+data/queue.json
+data/audit.json

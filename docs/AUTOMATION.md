@@ -4,8 +4,8 @@
 
 1. **Ingest (manual command):** enabled approved RSS endpoints -> normalized title, canonical source URL, publication time, source ID and checksum -> private local `data/inbox.json`. No copied text or images. Failures are explicit.
 2. **Editorial research:** humans inspect candidate leads, original documents, conflicts and context. Data is not automatically presumed accurate.
-3. **Submission:** independently authored JSON -> `data/queue.json`, validated required fields and source URLs.
-4. **Approval:** named human editor + explicit evidence/rights flags; risk-specific corroboration and senior-review flags -> `data/bulletins.json`, with timestamp and audit log.
+3. **Submission:** independently authored JSON -> `data/queue.json` (private, gitignored), validated required fields and source URLs.
+4. **Approval:** named human editor + explicit evidence/rights flags; risk-specific corroboration and senior-review flags -> `data/bulletins.json`, with timestamp and a private local audit log (secure backup required).
 5. **Build:** static pages, current 24-hour bulletin, searchable permanent archive, source links, retraction/correction notices, optional Article JSON-LD/sitemaps/RSS.
 6. **Monitoring:** `npm test` and build failures are local, visible operational checks. There is no remotely configured monitor yet.
 
@@ -35,3 +35,7 @@ Morning: run ingestion, review priority sources and source failures, select sign
 ## Technical limitations to address before production
 
 The JSON files are single-writer local storage and can conflict under concurrent editors; use a transactional database with approvals and access policies when multiple staff join. Source XML parsing is deliberately limited and should be extended with a tested standards-compliant XML library when Atom/RSS edge cases occur. Static 24-hour filtering is progressively enhanced in the browser, but publication still requires a fresh build. Continuous live news requires an actual host/worker architecture with operational monitoring.
+
+## Public repository data boundary
+
+This repository is public. Never commit `data/inbox.json`, `data/queue.json`, `data/audit.json`, unverified allegations, personal contact data, credentials or source communications. Only reviewed public content belongs in `data/bulletins.json`. Local audit records must be backed up securely; a real authenticated database is needed before multi-editor operation.

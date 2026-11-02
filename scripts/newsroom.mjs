@@ -5,7 +5,10 @@ import { slugify, validateBulletin, cleanText } from './lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const location = name => path.join(root, 'data', `${name}.json`);
-const read = async name => JSON.parse(await fs.readFile(location(name), 'utf8'));
+const read = async name => {
+  try { return JSON.parse(await fs.readFile(location(name), 'utf8')); }
+  catch (error) { if (error.code === 'ENOENT' && ['queue', 'audit'].includes(name)) return []; throw error; }
+};
 async function save(name, rows) {
   const file = location(name);
   const temp = `${file}.${process.pid}.tmp`;
