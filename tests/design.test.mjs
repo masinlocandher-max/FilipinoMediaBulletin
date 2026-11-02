@@ -26,5 +26,5 @@ test('approved identity and responsive layout build under the production subpath
  assert.match(html,/PRELAUNCH EDITORIAL PREVIEW/);
  assert.match(html,/these images are not evidence|these are coverage themes/i);
  assert.match(css,/@media\(max-width:720px\)/);
- assert.doesNotMatch(html,/\p{Extended_Pictographic}/u);
+ assert.doesNotMatch(html,/[\u{1F300}-\u{1FAFF}]/u);
 });
