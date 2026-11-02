@@ -25,6 +25,10 @@ test('approved identity and responsive layout build under the production subpath
  assert.match(html,/noindex, nofollow/);
  assert.match(html,/PRELAUNCH EDITORIAL PREVIEW/);
  assert.match(html,/these images are not evidence|these are coverage themes/i);
+ const archive=fs.readFileSync(path.join(root,'dist/archive/index.html'),'utf8');
+ const privacy=fs.readFileSync(path.join(root,'dist/privacy/index.html'),'utf8');
+ assert.doesNotMatch(archive,/FMB\s*\/\s*THE RECORD|Search FMB/);
+ assert.doesNotMatch(privacy,/initial FMB website|for the FMB website/);
  assert.match(css,/@media\(max-width:720px\)/);
  assert.doesNotMatch(html,/[\u{1F300}-\u{1FAFF}]/u);
 });
