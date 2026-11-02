@@ -1,0 +1,31 @@
+name: Validate FMB
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unit and workflow tests
+        run: npm test
+      - name: Build safe prelaunch site
+        run: npm run build
+      - name: Check non-public editorial data is not tracked
+        run: |
+          if git ls-files | grep -E '^data/(inbox|queue|audit|feed-state|monitor-health)\.json$'; then
+            echo 'Private editorial records must not be committed.'
+            exit 1
+          fi
+      - name: Check generated site is noindex before launch
+        run: |
+          grep -q 'Disallow: /' dist/robots.txt
+          grep -q 'noindex, nofollow' dist/index.html

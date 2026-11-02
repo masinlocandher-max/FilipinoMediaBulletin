@@ -21,7 +21,7 @@ const help = `Usage:
   node scripts/newsroom.mjs submit <draft.json>
   node scripts/newsroom.mjs approve <id> <editor> --evidence-reviewed --rights-reviewed [--corroborated] [--senior-editor=Name]
   node scripts/newsroom.mjs reject <id> <editor> <reason>
-  node scripts/newsroom.mjs correct <id> <replacement.json> <editor> <reason> --evidence-reviewed --rights-reviewed
+  node scripts/newsroom.mjs correct <id> <replacement.json> <editor> <reason> --evidence-reviewed --rights-reviewed [--corroborated] [--senior-editor=Name]
   node scripts/newsroom.mjs retract <id> <editor> <reason>
 
 No automated approval. This writes local JSON; review and commit changes deliberately.`;
@@ -91,7 +91,7 @@ try {
     const replacement = JSON.parse(await fs.readFile(path.resolve(replacementFile), 'utf8'));
     if (replacement.id && replacement.id !== id) throw new Error('Correction cannot change canonical id');
     if (replacement.section !== previous.section) throw new Error('Section changes need a separate editorial workflow');
-    const updated = { ...replacement, id, editor, evidence_checked: true, rights_checked: true, senior_editor: previous.senior_editor, risk: replacement.risk || previous.risk };
+    const updated = { ...replacement, id, editor, evidence_checked: true, rights_checked: true, senior_editor: argValue('--senior-editor') || null, risk: replacement.risk || previous.risk };
     const errors = validateBulletin(updated, { forPublication: true });
     if (errors.length) throw new Error(errors.join('; '));
     if (['high', 'contested'].includes(updated.risk) && !flag('--corroborated')) throw new Error('High-risk correction requires --corroborated');
