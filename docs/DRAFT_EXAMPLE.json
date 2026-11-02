@@ -1,0 +1,12 @@
+{
+  "section": "philippines",
+  "category": "Public affairs",
+  "headline": "Replace with a verified and specific news headline",
+  "summary": "Replace this instructional example with a factual original summary supported by the cited sources.",
+  "why_it_matters": "Explain who is affected, any confirmed practical consequences, and uncertainties without inventing an impact.",
+  "what_to_watch": "Name the next verified decision, event or open question if one exists, or explain what remains unknown.",
+  "risk": "normal",
+  "sources": [
+    { "name": "Replace with original source", "url": "https://example.com/replace-with-real-source" }
+  ]
+}

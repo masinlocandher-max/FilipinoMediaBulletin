@@ -57,7 +57,7 @@ node scripts/newsroom.mjs correct <id> ./corrected.json "Editor Name" "Explain e
 node scripts/newsroom.mjs retract <id> "Editor Name" "Explain why this bulletin was retracted"
 ```
 
-All data changes should be reviewed and committed to version control. For a correction, the original publication time is preserved; readers see a correction notice and the audit file retains the prior version. Retracted article URLs remain visible with a reason.
+Only approved public bulletins should be committed to this public repository. Pending drafts, discovery inbox and editorial audit data remain locally untracked and must be securely backed up outside the public repo. For a correction, the original publication time is preserved; readers see a correction notice and the audit file retains the prior version. Retracted article URLs remain visible with a reason.
 
 ## Deployment safeguards
 
@@ -91,9 +91,9 @@ The MVP uses static publishing rather than introducing a backend, complex CMS or
 - `scripts/newsroom.mjs` — editor-controlled lifecycle.
 - `scripts/lib.mjs` — validation, escaping, RSS parsing and time rules.
 - `data/sources.json` — declared publisher/primary-source registry and enablement.
-- `data/queue.json` — pending editorial drafts.
+- `data/queue.json` — private, gitignored local pending editorial drafts.
 - `data/bulletins.json` — approved/retracted bulletin records.
-- `data/audit.json` — editorial actions and corrections.
+- `data/audit.json` — private, gitignored local editorial decisions and correction history; require secure backup.
 - `docs/` — product, editorial, automation and operating decisions.
 
 ## Release gates

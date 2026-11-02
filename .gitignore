@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.env
+.env.*
+!*.example
+data/inbox.json
+.DS_Store
+data/queue.json
+data/audit.json
